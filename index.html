@@ -478,7 +478,7 @@ let activities = [];
 let nextId = 100;
 let editId = null;
 let calYear = 2026, calMonth = 5;
-let sheetsUrl = localStorage.getItem('sheets_url') || '';
+let sheetsUrl = localStorage.getItem('sheets_url') || 'https://script.google.com/macros/s/AKfycbyP8H_ebPIPoL2qoiyEfGKzie5e_y2GwQJX9FaFyNXWZ5cboKanNqbRXqI-X-tByrLcLg/exec';
 
 function thYearToAD(y){ return y > 2500 ? y - 543 : y; }
 function buddhistYear(y){ return y + 543; }
@@ -735,7 +735,7 @@ function openEditModal(id){
 function closeModal(){ document.getElementById('modal-overlay').classList.remove('open'); }
 function closeModalBg(e){ if(e.target===document.getElementById('modal-overlay')) closeModal(); }
 
-function saveAct(){
+async function saveAct(){
   const date=buildDateString();
   const act=document.getElementById('m-act').value.trim();
   const owner=document.getElementById('m-owner').value;
@@ -744,17 +744,35 @@ function saveAct(){
   if(editId){
     const idx=activities.findIndex(a=>a.id===editId);
     activities[idx]={...activities[idx],date,activity:act,owner,mo,yr};
+    closeModal(); refresh(); showToast('กำลังบันทึก...');
+    await sendToSheets({action:'edit',id:editId,date,activity:act,owner});
     showToast('แก้ไขเรียบร้อย ✓');
   } else {
-    activities.push({id:nextId++,date,activity:act,owner,mo,yr});
+    const id=nextId++;
+    activities.push({id,date,activity:act,owner,mo,yr});
+    closeModal(); refresh(); showToast('กำลังบันทึก...');
+    await sendToSheets({action:'add',id,date,activity:act,owner});
     showToast('เพิ่มกิจกรรมเรียบร้อย ✓');
   }
-  closeModal(); refresh();
 }
-function deleteAct(){
+async function deleteAct(){
   if(!confirm('ลบกิจกรรมนี้?')) return;
-  activities=activities.filter(a=>a.id!==editId);
-  closeModal(); refresh(); showToast('ลบแล้ว');
+  const id=editId;
+  activities=activities.filter(a=>a.id!==id);
+  closeModal(); refresh(); showToast('กำลังลบ...');
+  await sendToSheets({action:'delete',id});
+  showToast('ลบแล้ว ✓');
+}
+async function sendToSheets(data){
+  if(!sheetsUrl) return;
+  try {
+    await fetch(sheetsUrl, {
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(data)
+    });
+  } catch(e){ showToast('บันทึกลง Sheets ไม่สำเร็จ'); }
 }
 
 function exportCSV(){
