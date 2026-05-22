@@ -478,7 +478,7 @@ let activities = [];
 let nextId = 100;
 let editId = null;
 let calYear = 2026, calMonth = 5;
-let sheetsUrl = localStorage.getItem('sheets_url') || 'https://script.google.com/macros/s/AKfycbyP8H_ebPIPoL2qoiyEfGKzie5e_y2GwQJX9FaFyNXWZ5cboKanNqbRXqI-X-tByrLcLg/exec';
+let sheetsUrl = localStorage.getItem('sheets_url') || 'https://script.google.com/macros/s/AKfycbyiqIlkhJ-aRTdRBfpdFB_dl_J52Yo7c3fkqZ3LQAHECU4v1cf2VN7-oCgw_atpx4Bx9g/exec';
 
 function thYearToAD(y){ return y > 2500 ? y - 543 : y; }
 function buddhistYear(y){ return y + 543; }
@@ -766,12 +766,8 @@ async function deleteAct(){
 async function sendToSheets(data){
   if(!sheetsUrl) return;
   try {
-    await fetch(sheetsUrl, {
-      method:'POST',
-      mode:'no-cors',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(data)
-    });
+    const params = new URLSearchParams(data);
+    await fetch(sheetsUrl+'?'+params.toString(), {mode:'no-cors'});
   } catch(e){ showToast('บันทึกลง Sheets ไม่สำเร็จ'); }
 }
 
