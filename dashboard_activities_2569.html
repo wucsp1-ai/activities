@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ปฏิทินกิจกรรมนักศึกษา ปีการศึกษา 2569</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&family=Mitr:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #4C3B9E;
+  --primary-light: #6B5AC7;
+  --primary-pale: #EEF0FF;
+  --accent: #C0392B;
+  --gold: #C9952A;
+  --gold-pale: #FDF6E3;
+  --teal: #1A7A6E;
+  --teal-pale: #E8F5F3;
+  --bg: #F7F6FB;
+  --surface: #FFFFFF;
+  --border: #E2DFF2;
+  --text: #1C1633;
+  --text-muted: #7B7494;
+  --text-light: #AEA9C8;
+  --shadow: 0 2px 12px rgba(76,59,158,0.08);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Sarabun', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+/* HEADER */
+.header {
+  background: var(--primary);
+  padding: 1.25rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 2px 16px rgba(76,59,158,0.25);
+}
+.header-left { display: flex; align-items: center; gap: 14px; }
+.header-logo {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Mitr', sans-serif; font-size: 16px; font-weight: 500; color: #fff;
+}
+.header-title {
+  font-family: 'Mitr', sans-serif; font-size: 17px; font-weight: 500; color: #fff; line-height: 1.3;
+}
+.header-sub { font-size: 12px; color: rgba(255,255,255,0.65); }
+.header-right { display: flex; align-items: center; gap: 8px; }
+.btn-refresh {
+  background: rgba(255,255,255,0.15); border: none; border-radius: var(--radius-sm);
+  color: #fff; padding: 7px 14px; font-family: 'Sarabun', sans-serif; font-size: 13px;
+  cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background .2s;
+}
+.btn-refresh:hover { background: rgba(255,255,255,0.25); }
+/* SETUP BANNER */
+.setup-banner {
+  background: linear-gradient(135deg, #FDF6E3, #FFF8EC);
+  border: 1.5px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 2rem;
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.setup-banner.hidden { display: none; }
+.setup-icon { font-size: 22px; flex-shrink: 0; }
+.setup-body h3 { font-size: 15px; font-weight: 600; color: var(--gold); margin-bottom: 6px; }
+.setup-body p { font-size: 13px; color: #7A5C1E; line-height: 1.7; }
+.setup-body code {
+  background: rgba(201,149,42,0.15); border-radius: 4px;
+  padding: 2px 6px; font-family: monospace; font-size: 12px; color: #5A3E0E;
+}
+.url-input-row { display: flex; gap: 8px; margin-top: 10px; }
+.url-input {
+  flex: 1; padding: 8px 12px; border: 1.5px solid var(--gold);
+  border-radius: var(--radius-sm); font-family: 'Sarabun', sans-serif; font-size: 13px;
+  background: #fff; color: var(--text);
+}
+.url-input:focus { outline: none; border-color: var(--primary); }
+.btn-connect {
+  background: var(--primary); color: #fff; border: none;
+  border-radius: var(--radius-sm); padding: 8px 16px;
+  font-family: 'Sarabun', sans-serif; font-size: 13px; font-weight: 500;
+  cursor: pointer; white-space: nowrap; transition: background .2s;
+}
+.btn-connect:hover { background: var(--primary-light); }
+/* MAIN */
+.main { padding: 0 2rem 2rem; max-width: 1200px; margin: 0 auto; }
+/* STATS */
+.stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 1.5rem; }
+.stat-card {
+  background: var(--surface); border-radius: var(--radius);
+  padding: 1rem 1.25rem; border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.stat-card .s-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.stat-card .s-val { font-family: 'Mitr', sans-serif; font-size: 26px; font-weight: 500; color: var(--primary); }
+.stat-card .s-sub { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+/* TABS */
+.tab-bar {
+  display: flex; gap: 4px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 4px; margin-bottom: 1rem; width: fit-content;
+  box-shadow: var(--shadow);
+}
+.tab-btn {
+  padding: 7px 18px; border: none; border-radius: 9px;
+  background: transparent; font-family: 'Sarabun', sans-serif;
+  font-size: 13px; color: var(--text-muted); cursor: pointer; transition: all .2s;
+  display: flex; align-items: center; gap: 6px;
+}
+.tab-btn.active { background: var(--primary); color: #fff; }
+.tab-btn:hover:not(.active) { background: var(--primary-pale); color: var(--primary); }
+/* TOOLBAR */
+.toolbar { display: flex; gap: 8px; margin-bottom: 1rem; align-items: center; flex-wrap: wrap; }
+.search-wrap { position: relative; flex: 1; min-width: 200px; }
+.search-wrap svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-light); }
+.search-wrap input {
+  width: 100%; padding: 8px 12px 8px 34px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-family: 'Sarabun', sans-serif; font-size: 13px;
+  background: var(--surface); color: var(--text); transition: border .2s;
+}
+.search-wrap input:focus { outline: none; border-color: var(--primary); }
+select.filter-sel {
+  padding: 8px 12px; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); font-family: 'Sarabun', sans-serif;
+  font-size: 13px; background: var(--surface); color: var(--text); cursor: pointer;
+}
+select.filter-sel:focus { outline: none; border-color: var(--primary); }
+.btn-add {
+  background: var(--primary); color: #fff; border: none;
+  border-radius: var(--radius-sm); padding: 8px 16px;
+  font-family: 'Sarabun', sans-serif; font-size: 13px; font-weight: 500;
+  cursor: pointer; display: flex; align-items: center; gap: 6px; white-space: nowrap;
+  transition: background .2s;
+}
+.btn-add:hover { background: var(--primary-light); }
+.btn-export {
+  background: var(--surface); color: var(--text-muted);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 8px 14px; font-family: 'Sarabun', sans-serif; font-size: 13px;
+  cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all .2s;
+}
+.btn-export:hover { border-color: var(--primary); color: var(--primary); }
+/* TABLE */
+.table-wrap { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; box-shadow: var(--shadow); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+thead th { background: var(--primary-pale); padding: 10px 14px; text-align: left; font-weight: 500; font-size: 12px; color: var(--primary); white-space: nowrap; }
+tbody tr { border-top: 1px solid var(--border); transition: background .15s; }
+tbody tr:hover { background: var(--primary-pale); }
+tbody td { padding: 10px 14px; color: var(--text); vertical-align: middle; }
+.cell-date { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+.badge {
+  display: inline-block; font-size: 11px; padding: 3px 9px;
+  border-radius: 20px; font-weight: 500;
+}
+.badge-org { background: #EEF0FF; color: #3C3489; }
+.badge-sch { background: #E8F5F3; color: #0F6E56; }
+.badge-sap { background: #FDF6E3; color: #7A5C1E; }
+.badge-none { background: #F1EFE8; color: #888780; }
+.btn-edit {
+  background: none; border: 1px solid var(--border); border-radius: 6px;
+  padding: 4px 8px; cursor: pointer; color: var(--text-muted); transition: all .15s;
+  font-size: 12px;
+}
+.btn-edit:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-pale); }
+.tbl-foot { padding: 10px 14px; font-size: 12px; color: var(--text-light); background: var(--bg); border-top: 1px solid var(--border); }
+/* LOADING */
+.loading-wrap { text-align: center; padding: 3rem; color: var(--text-muted); }
+.spinner {
+  width: 32px; height: 32px; border: 3px solid var(--primary-pale);
+  border-top-color: var(--primary); border-radius: 50%;
+  animation: spin .8s linear infinite; margin: 0 auto 1rem;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+/* CALENDAR */
+.cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.cal-title { font-family: 'Mitr', sans-serif; font-size: 16px; font-weight: 500; color: var(--primary); }
+.cal-btn { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 6px 12px; cursor: pointer; color: var(--text-muted); transition: all .15s; }
+.cal-btn:hover { border-color: var(--primary); color: var(--primary); }
+.cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
+.cal-day-name { text-align: center; font-size: 11px; font-weight: 500; color: var(--text-muted); padding: 6px 0; }
+.cal-cell { min-height: 80px; border: 1px solid var(--border); border-radius: 8px; padding: 5px 6px; background: var(--surface); }
+.cal-cell.today { border-color: var(--primary); border-width: 2px; }
+.cal-cell.other { background: var(--bg); }
+.cal-cell .cdate { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.cal-cell.today .cdate { color: var(--primary); font-weight: 600; }
+.cal-ev { font-size: 10px; background: var(--primary-pale); color: var(--primary); border-radius: 3px; padding: 1px 4px; margin-top: 2px; line-height: 1.5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cal-ev-more { font-size: 10px; color: var(--text-light); margin-top: 2px; }
+/* TIMELINE */
+.tl-wrap { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); overflow-x: auto; box-shadow: var(--shadow); }
+.tl-inner { min-width: 800px; }
+.tl-header { display: flex; border-bottom: 1px solid var(--border); }
+.tl-name-col { width: 220px; flex-shrink: 0; padding: 10px 14px; font-size: 11px; font-weight: 500; color: var(--text-muted); border-right: 1px solid var(--border); }
+.tl-months { display: flex; flex: 1; }
+.tl-month { flex: 1; text-align: center; padding: 6px 0; font-size: 11px; font-weight: 500; border-left: 1px solid var(--border); }
+.tl-month.sem1 { color: var(--primary); background: var(--primary-pale); }
+.tl-month.sem2 { color: var(--teal); background: var(--teal-pale); }
+.tl-row { display: flex; border-bottom: 1px solid var(--border); min-height: 34px; align-items: center; }
+.tl-row:last-child { border-bottom: none; }
+.tl-row:hover { background: var(--bg); }
+.tl-label { width: 220px; flex-shrink: 0; padding: 6px 14px; font-size: 12px; color: var(--text); border-right: 1px solid var(--border); line-height: 1.4; }
+.tl-track { flex: 1; position: relative; height: 34px; }
+.tl-bar { position: absolute; height: 18px; top: 8px; border-radius: 5px; min-width: 10px; opacity: .85; }
+.tl-bar.s1 { background: var(--primary-light); }
+.tl-bar.s2 { background: #1D9E75; }
+.legend { display: flex; gap: 16px; padding: 10px 14px; border-top: 1px solid var(--border); }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted); }
+.legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+/* MODAL */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(28,22,51,0.5); z-index: 200;
+  align-items: center; justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--surface); border-radius: var(--radius);
+  padding: 1.5rem; width: 420px; max-width: 95vw;
+  box-shadow: 0 8px 40px rgba(76,59,158,0.2);
+  border: 1px solid var(--border);
+}
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+.modal-header h3 { font-family: 'Mitr', sans-serif; font-size: 16px; font-weight: 500; color: var(--primary); }
+.modal-close { background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 18px; line-height: 1; }
+.form-group { margin-bottom: .875rem; }
+.form-group label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; font-weight: 500; }
+.form-group input, .form-group select {
+  width: 100%; padding: 8px 12px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-family: 'Sarabun', sans-serif; font-size: 13px;
+  background: var(--bg); color: var(--text); transition: border .2s;
+}
+.form-group input:focus, .form-group select:focus { outline: none; border-color: var(--primary); background: var(--surface); }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.25rem; }
+.btn-del { background: none; border: none; color: #C0392B; font-family: 'Sarabun', sans-serif; font-size: 13px; cursor: pointer; margin-right: auto; padding: 4px 0; }
+.btn-del:hover { text-decoration: underline; }
+.btn-cancel { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 8px 16px; font-family: 'Sarabun', sans-serif; font-size: 13px; cursor: pointer; color: var(--text-muted); transition: all .2s; }
+.btn-cancel:hover { border-color: var(--primary); color: var(--primary); }
+.btn-save { background: var(--primary); color: #fff; border: none; border-radius: var(--radius-sm); padding: 8px 20px; font-family: 'Sarabun', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background .2s; }
+.btn-save:hover { background: var(--primary-light); }
+/* PANELS */
+.panel { display: none; }
+.panel.active { display: block; }
+/* TOAST */
+.toast {
+  position: fixed; bottom: 24px; right: 24px;
+  background: var(--primary); color: #fff;
+  padding: 10px 18px; border-radius: var(--radius-sm);
+  font-size: 13px; box-shadow: 0 4px 16px rgba(76,59,158,0.3);
+  z-index: 300; transform: translateY(60px); opacity: 0;
+  transition: all .3s;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+@media (max-width: 700px) {
+  .stats { grid-template-columns: repeat(2,1fr); }
+  .main { padding: 0 1rem 1rem; }
+  .header { padding: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <div class="header-logo">มวล.</div>
+    <div>
+      <div class="header-title">ปฏิทินกิจกรรมนักศึกษา</div>
+      <div class="header-sub">ปีการศึกษา 2569 · มหาวิทยาลัยวลัยลักษณ์</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span id="sync-status" style="font-size:12px;color:rgba(255,255,255,0.65)"></span>
+    <button class="btn-refresh" onclick="loadData()">
+      ↻ รีเฟรช
+    </button>
+  </div>
+</header>
+
+<!-- SETUP BANNER -->
+<div class="setup-banner" id="setup-banner">
+  <div class="setup-icon">⚙️</div>
+  <div class="setup-body">
+    <h3>ตั้งค่าการเชื่อมต่อ Google Sheets</h3>
+    <p>วาง URL จาก <code>Apps Script → Deploy → Web app</code> ด้านล่าง แล้วกด "เชื่อมต่อ"<br>
+    หรือกด "ใช้ข้อมูลตัวอย่าง" เพื่อดูระบบก่อนได้เลยค่ะ</p>
+    <div class="url-input-row">
+      <input class="url-input" id="sheets-url" placeholder="https://script.google.com/macros/s/AKfy.../exec" type="text">
+      <button class="btn-connect" onclick="connectSheets()">เชื่อมต่อ</button>
+      <button class="btn-cancel" onclick="useSampleData()" style="white-space:nowrap">ใช้ข้อมูลตัวอย่าง</button>
+    </div>
+  </div>
+</div>
+
+<div class="main" id="main-content">
+  <!-- STATS -->
+  <div class="stats" id="stats-row"></div>
+
+  <!-- TABS -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('table',this)">📋 รายการ</button>
+    <button class="tab-btn" onclick="switchTab('calendar',this)">📅 ปฏิทิน</button>
+    <button class="tab-btn" onclick="switchTab('timeline',this)">📊 Timeline</button>
+  </div>
+
+  <!-- TABLE PANEL -->
+  <div class="panel active" id="panel-table">
+    <div class="toolbar">
+      <div class="search-wrap">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="search" placeholder="ค้นหากิจกรรม..." oninput="renderTable()">
+      </div>
+      <select class="filter-sel" id="filter-month" onchange="renderTable()">
+        <option value="">ทุกเดือน</option>
+      </select>
+      <select class="filter-sel" id="filter-owner" onchange="renderTable()">
+        <option value="">ทุกผู้รับผิดชอบ</option>
+      </select>
+      <button class="btn-add" onclick="openModal()">+ เพิ่มกิจกรรม</button>
+      <button class="btn-export" onclick="exportCSV()">↓ Export CSV</button>
+    </div>
+    <div class="table-wrap">
+      <div id="loading-wrap" class="loading-wrap">
+        <div class="spinner"></div>
+        <div>กำลังโหลดข้อมูล...</div>
+      </div>
+      <table id="main-table" style="display:none">
+        <thead>
+          <tr>
+            <th style="width:40px">#</th>
+            <th>วันที่</th>
+            <th>กิจกรรม</th>
+            <th>ผู้รับผิดชอบ</th>
+            <th style="width:60px"></th>
+          </tr>
+        </thead>
+        <tbody id="tbl-body"></tbody>
+      </table>
+      <div class="tbl-foot" id="tbl-foot"></div>
+    </div>
+  </div>
+
+  <!-- CALENDAR PANEL -->
+  <div class="panel" id="panel-calendar">
+    <div style="background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);padding:1.25rem;box-shadow:var(--shadow)">
+      <div class="cal-nav">
+        <button class="cal-btn" onclick="changeMonth(-1)">◀</button>
+        <div>
+          <div class="cal-title" id="cal-title"></div>
+          <div style="font-size:11px;text-align:center;color:var(--text-muted)">ปีการศึกษา 2569</div>
+        </div>
+        <button class="cal-btn" onclick="changeMonth(1)">▶</button>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+    </div>
+  </div>
+
+  <!-- TIMELINE PANEL -->
+  <div class="panel" id="panel-timeline">
+    <div class="tl-wrap">
+      <div class="tl-inner" id="tl-inner"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalBg(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-title">เพิ่มกิจกรรม</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="form-group">
+      <label>วันที่</label>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div style="flex:1">
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:3px">วันเริ่มต้น</div>
+          <input type="date" id="m-date-start" oninput="updateDatePreview()" style="width:100%">
+        </div>
+        <div style="color:var(--text-light);margin-top:16px;padding:0 2px">–</div>
+        <div style="flex:1">
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:3px">วันสิ้นสุด <span style="font-weight:400">(ถ้ามี)</span></div>
+          <input type="date" id="m-date-end" oninput="updateDatePreview()" style="width:100%">
+        </div>
+      </div>
+      <div id="date-preview" style="font-size:12px;color:var(--primary);margin-top:5px;min-height:18px"></div>
+    </div>
+    <div class="form-group">
+      <label>กิจกรรม</label>
+      <input type="text" id="m-act" placeholder="ชื่อกิจกรรม">
+    </div>
+    <div class="form-group">
+      <label>ผู้รับผิดชอบ</label>
+      <input type="text" id="m-owner" placeholder="เช่น องค์การบริหาร, สำนักวิชา, ศ.สพน." list="owner-suggestions">
+      <datalist id="owner-suggestions">
+        <option value="องค์การบริหาร">
+        <option value="สำนักวิชา">
+        <option value="ศ.สพน.">
+      </datalist>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-del" id="del-btn" onclick="deleteAct()" style="display:none">ลบกิจกรรมนี้</button>
+      <button class="btn-cancel" onclick="closeModal()">ยกเลิก</button>
+      <button class="btn-save" onclick="saveAct()">บันทึก</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const MONTHS_TH = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+const MONTHS_S  = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+const DAYS_TH   = ['อา','จ','อ','พ','พฤ','ศ','ส'];
+
+const SAMPLE = [
+  {id:1,date:'มิ.ย.-ก.ย. 69',activity:'ควบคุมกำกับบังคับใช้กฎยาเสพติด (ตรวจหอพัก)',owner:'',mo:6,yr:2569},
+  {id:2,date:'มิ.ย.-ก.ย. 69',activity:'ควบคุมกำกับบังคับใช้กฎวินัย (จราจร+แต่งกาย)',owner:'',mo:6,yr:2569},
+  {id:3,date:'จ. 15 มิ.ย. 69',activity:'วันเปิดภาคการศึกษา 1/2569',owner:'',mo:6,yr:2569},
+  {id:4,date:'14-30 มิ.ย. 69',activity:'รับสมัครอนุกรรมการประจำปีการศึกษา 2569 ครั้งที่ 2/2569',owner:'องค์การบริหาร',mo:6,yr:2569},
+  {id:5,date:'พ. 17 มิ.ย. 69',activity:'กิจกรรมพุธบ่าย นักศึกษาพบอาจารย์สำนักวิชา',owner:'สำนักวิชา',mo:6,yr:2569},
+  {id:6,date:'พ. 24 มิ.ย. 69',activity:'กิจกรรมพุธบ่าย',owner:'ศ.สพน.',mo:6,yr:2569},
+  {id:7,date:'29 มิ.ย. 69',activity:'เลือกตั้งสภานักศึกษา',owner:'',mo:6,yr:2569},
+  {id:8,date:'22 มิ.ย. - 1 ก.ค. 2569',activity:'ต่ออายุชมรม ครั้งที่ 1/2569',owner:'',mo:6,yr:2569},
+  {id:9,date:'9 ก.ค. 69',activity:'ไหว้ครู ประจำปีการศึกษา 2569',owner:'',mo:7,yr:2569},
+  {id:10,date:'14 ก.ค. 69',activity:'5 ส อาคารกิจกรรม ครั้งที่ 1',owner:'',mo:7,yr:2569},
+  {id:11,date:'22 ก.ค. 69',activity:'โครงการเปิดโลกกิจกรรม ประจำปีการศึกษา 2569',owner:'',mo:7,yr:2569},
+  {id:12,date:'23 ก.ค.-1 ส.ค. 69',activity:'ต่ออายุชมรม ครั้งที่ 2/2569',owner:'',mo:7,yr:2569},
+  {id:13,date:'30 ส.ค. 69',activity:'กิจกรรม WU Freshy Award 2026',owner:'',mo:8,yr:2569},
+  {id:14,date:'14 ก.ย. 69',activity:'5 ส อาคารกิจกรรม ครั้งที่ 2',owner:'',mo:9,yr:2569},
+  {id:15,date:'15-16 ต.ค. 69',activity:'กิจกรรมสัมนาองค์การบริหาร องค์การนักศึกษา',owner:'',mo:10,yr:2569},
+  {id:16,date:'พ. 1 ก.ค. 69',activity:'กิจกรรมพุธบ่าย',owner:'',mo:7,yr:2569},
+  {id:17,date:'พ. 8 ก.ค. 69',activity:'กิจกรรมพุธบ่าย',owner:'',mo:7,yr:2569},
+  {id:18,date:'พ. 15 ก.ค. 69',activity:'กิจกรรมพุธบ่าย',owner:'',mo:7,yr:2569},
+  {id:19,date:'พ. 22 ก.ค. 69',activity:'กิจกรรมพุธบ่าย',owner:'',mo:7,yr:2569},
+  {id:20,date:'พ. 5 ส.ค. 69',activity:'กิจกรรมพุธบ่าย',owner:'',mo:8,yr:2569},
+  {id:21,date:'พ. 19 ส.ค. 69',activity:'กิจกรรมพุธบ่าย',owner:'',mo:8,yr:2569},
+  {id:22,date:'พ. 26 ส.ค. 69',activity:'กิจกรรมพุธบ่าย',owner:'',mo:8,yr:2569},
+  {id:23,date:'พ. 2 ก.ย. 69',activity:'กิจกรรมพุธบ่าย',owner:'',mo:9,yr:2569},
+  {id:24,date:'พ. 9 ก.ย. 69',activity:'กิจกรรมพุธบ่าย',owner:'',mo:9,yr:2569},
+  {id:25,date:'พ. 16 ก.ย. 69',activity:'กิจกรรมพุธบ่าย',owner:'',mo:9,yr:2569},
+  {id:26,date:'ศ. 18 - อา. 27 ก.ย. 69',activity:'ช่วงก่อนสอบ 2 สัปดาห์ งดกิจกรรม',owner:'',mo:9,yr:2569},
+  {id:27,date:'จ. 28 ก.ย. 69',activity:'วันแรกของการสอบปลายภาค',owner:'',mo:9,yr:2569},
+  {id:28,date:'อา. 11 ต.ค. 69',activity:'วันสุดท้ายของการสอบปลายภาค',owner:'',mo:10,yr:2569},
+  {id:29,date:'จ. 12 ต.ค. 69',activity:'วันปิดภาคการศึกษาที่ 1/2569',owner:'',mo:10,yr:2569},
+  {id:30,date:'จ. 9 พ.ย. 69',activity:'วันเปิดภาคการศึกษาที่ 2/2569',owner:'',mo:11,yr:2569},
+  {id:31,date:'พ. 11 พ.ย. 69',activity:'กิจกรรมพุธบ่าย นักศึกษาพบอาจารย์สำนักวิชา',owner:'สำนักวิชา',mo:11,yr:2569},
+  {id:32,date:'พ. 18 พ.ย. 69',activity:'กิจกรรมพุธบ่าย',owner:'ศ.สพน.',mo:11,yr:2569},
+  {id:33,date:'พ. 25 พ.ย. 69',activity:'กิจกรรมพุธบ่าย',owner:'',mo:11,yr:2569},
+  {id:34,date:'พ. 2 ธ.ค. 69',activity:'กิจกรรมพุธบ่าย',owner:'',mo:12,yr:2569},
+  {id:35,date:'พ. 9 ธ.ค. 69',activity:'กิจกรรมพุธบ่าย',owner:'',mo:12,yr:2569},
+  {id:36,date:'พ. 16 ธ.ค. 69',activity:'กิจกรรมพุธบ่าย',owner:'',mo:12,yr:2569},
+  {id:37,date:'พ. 23 ธ.ค. 69',activity:'กิจกรรมพุธบ่าย',owner:'',mo:12,yr:2569},
+  {id:38,date:'พ. 30 ธ.ค. 69',activity:'กิจกรรมพุธบ่าย',owner:'',mo:12,yr:2569},
+  {id:39,date:'พ. 6 ม.ค. 70',activity:'กิจกรรมพุธบ่าย',owner:'',mo:1,yr:2570},
+  {id:40,date:'พ. 13 ม.ค. 70',activity:'กิจกรรมพุธบ่าย',owner:'',mo:1,yr:2570},
+  {id:41,date:'พ. 20 ม.ค. 70',activity:'กิจกรรมพุธบ่าย',owner:'',mo:1,yr:2570},
+  {id:42,date:'พ. 20-30 ม.ค. 70',activity:'กีฬามหาวิทยาลัย',owner:'',mo:1,yr:2570},
+  {id:43,date:'พ. 27 ม.ค. 70',activity:'กิจกรรมพุธบ่าย',owner:'',mo:1,yr:2570},
+  {id:44,date:'พ. 3 ก.พ. 70',activity:'กิจกรรมพุธบ่าย',owner:'',mo:2,yr:2570},
+  {id:45,date:'8-21 ก.พ. 70',activity:'ช่วงก่อนสอบ 2 สัปดาห์ งดกิจกรรม',owner:'',mo:2,yr:2570},
+  {id:46,date:'22 ก.พ. 70',activity:'วันแรกของการสอบปลายภาค',owner:'',mo:2,yr:2570},
+  {id:47,date:'7 มี.ค. 70',activity:'วันสุดท้ายของการสอบปลายภาค',owner:'',mo:3,yr:2570},
+  {id:48,date:'8 มี.ค. 70',activity:'วันปิดภาคการศึกษาที่ 2/2569',owner:'',mo:3,yr:2570},
+];
+
+let activities = [];
+let nextId = 100;
+let editId = null;
+let calYear = 2026, calMonth = 5;
+let sheetsUrl = localStorage.getItem('sheets_url') || '';
+
+function thYearToAD(y){ return y > 2500 ? y - 543 : y; }
+function buddhistYear(y){ return y + 543; }
+
+function guessMonth(d){
+  const map={'มิ.ย':6,'มิถุนายน':6,'ก.ค':7,'กรกฎาคม':7,'ส.ค':8,'สิงหาคม':8,'ก.ย':9,'กันยายน':9,'ต.ค':10,'ตุลาคม':10,'พ.ย':11,'พฤศจิกายน':11,'ธ.ค':12,'ธันวาคม':12,'ม.ค':1,'มกราคม':1,'ก.พ':2,'กุมภาพันธ์':2,'มี.ค':3,'มีนาคม':3};
+  for(const [k,v] of Object.entries(map)){if(d.includes(k))return v;}
+  return 6;
+}
+function guessYear(d){ return (d.includes('70')||d.includes('2570'))?2570:2569; }
+
+async function loadData(){
+  if(!sheetsUrl){ return; }
+  document.getElementById('sync-status').textContent = 'กำลังโหลด...';
+  try {
+    const res = await fetch(sheetsUrl);
+    const json = await res.json();
+    activities = json.filter(r=>r.activity||r.กิจกรรม).map((r,i)=>({
+      id: r.id || i+1,
+      date: r.date || r.วันที่ || '',
+      activity: r.activity || r.กิจกรรม || '',
+      owner: r.owner || r.ผู้รับผิดชอบ || '',
+      mo: guessMonth(r.date||r.วันที่||''),
+      yr: guessYear(r.date||r.วันที่||'')
+    }));
+    nextId = Math.max(...activities.map(a=>Number(a.id)||0))+1;
+    document.getElementById('sync-status').textContent = 'อัปเดตล่าสุด '+new Date().toLocaleTimeString('th-TH');
+    refresh();
+    showToast('โหลดข้อมูลจาก Google Sheets สำเร็จ ✓');
+  } catch(e){
+    document.getElementById('sync-status').textContent = 'โหลดไม่สำเร็จ';
+    showToast('ไม่สามารถเชื่อมต่อ Sheets ได้ — ใช้ข้อมูลเดิม');
+  }
+}
+
+function connectSheets(){
+  const url = document.getElementById('sheets-url').value.trim();
+  if(!url){ alert('กรุณาวาง URL ก่อนค่ะ'); return; }
+  sheetsUrl = url;
+  localStorage.setItem('sheets_url', url);
+  document.getElementById('setup-banner').classList.add('hidden');
+  showLoading();
+  loadData();
+}
+
+function useSampleData(){
+  activities = JSON.parse(JSON.stringify(SAMPLE));
+  document.getElementById('setup-banner').classList.add('hidden');
+  document.getElementById('sync-status').textContent = 'ข้อมูลตัวอย่าง';
+  refresh();
+  showToast('ใช้ข้อมูลตัวอย่าง 48 กิจกรรม');
+}
+
+function showLoading(){
+  document.getElementById('loading-wrap').style.display='block';
+  document.getElementById('main-table').style.display='none';
+}
+
+function hideLoading(){
+  document.getElementById('loading-wrap').style.display='none';
+  document.getElementById('main-table').style.display='table';
+}
+
+function refresh(){
+  hideLoading();
+  renderStats();
+  renderFilters();
+  renderTable();
+}
+
+function renderStats(){
+  const total = activities.length;
+  const s1 = activities.filter(a=>a.yr===2569&&a.mo>=6&&a.mo<=10).length;
+  const s2 = activities.filter(a=>(a.yr===2569&&a.mo>=11)||(a.yr===2570)).length;
+  const owners = new Set(activities.filter(a=>a.owner).map(a=>a.owner)).size;
+  document.getElementById('stats-row').innerHTML = `
+    <div class="stat-card"><div class="s-label">กิจกรรมทั้งหมด</div><div class="s-val">${total}</div><div class="s-sub">ปีการศึกษา 2569</div></div>
+    <div class="stat-card"><div class="s-label">ภาคการศึกษา 1/2569</div><div class="s-val">${s1}</div><div class="s-sub">มิ.ย. – ต.ค. 2569</div></div>
+    <div class="stat-card"><div class="s-label">ภาคการศึกษา 2/2569</div><div class="s-val">${s2}</div><div class="s-sub">พ.ย. 2569 – มี.ค. 2570</div></div>
+    <div class="stat-card"><div class="s-label">ผู้รับผิดชอบ</div><div class="s-val">${owners}</div><div class="s-sub">หน่วยงาน</div></div>
+  `;
+}
+
+function renderFilters(){
+  const moSel = document.getElementById('filter-month');
+  const curMo = moSel.value;
+  const keys = [];
+  activities.forEach(a=>{ const k=a.mo+'-'+a.yr; if(!keys.includes(k)) keys.push(k); });
+  moSel.innerHTML = '<option value="">ทุกเดือน</option>' + keys.map(k=>{
+    const [mo,yr]=k.split('-').map(Number);
+    return `<option value="${k}">${MONTHS_S[mo-1]} ${yr}</option>`;
+  }).join('');
+  moSel.value = curMo;
+
+  const owSel = document.getElementById('filter-owner');
+  const curOw = owSel.value;
+  const owners = [...new Set(activities.filter(a=>a.owner).map(a=>a.owner))];
+  owSel.innerHTML = '<option value="">ทุกผู้รับผิดชอบ</option>' + owners.map(o=>`<option value="${o}">${o}</option>`).join('');
+  owSel.value = curOw;
+}
+
+function badgeHTML(owner){
+  if(!owner) return '<span class="badge badge-none">-</span>';
+  if(owner==='องค์การบริหาร') return `<span class="badge badge-org">${owner}</span>`;
+  if(owner==='สำนักวิชา') return `<span class="badge badge-sch">${owner}</span>`;
+  if(owner==='ศ.สพน.') return `<span class="badge badge-sap">${owner}</span>`;
+  return `<span class="badge badge-org">${owner}</span>`;
+}
+
+function renderTable(){
+  const q = document.getElementById('search').value.toLowerCase();
+  const mo = document.getElementById('filter-month').value;
+  const ow = document.getElementById('filter-owner').value;
+  const list = activities.filter(a=>{
+    if(q && !a.activity.toLowerCase().includes(q) && !a.date.toLowerCase().includes(q)) return false;
+    if(mo && (a.mo+'-'+a.yr)!==mo) return false;
+    if(ow && a.owner!==ow) return false;
+    return true;
+  });
+  document.getElementById('tbl-body').innerHTML = list.map((a,i)=>`
+    <tr>
+      <td style="color:var(--text-light);font-size:12px">${i+1}</td>
+      <td class="cell-date">${a.date}</td>
+      <td>${a.activity}</td>
+      <td>${badgeHTML(a.owner)}</td>
+      <td><button class="btn-edit" onclick="openEditModal(${a.id})">✏️ แก้ไข</button></td>
+    </tr>
+  `).join('');
+  document.getElementById('tbl-foot').textContent = `แสดง ${list.length} จาก ${activities.length} กิจกรรม`;
+}
+
+function switchTab(tab, btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-'+tab).classList.add('active');
+  if(tab==='calendar') renderCalendar();
+  if(tab==='timeline') renderTimeline();
+}
+
+function renderCalendar(){
+  document.getElementById('cal-title').textContent = MONTHS_TH[calMonth] + ' ' + buddhistYear(calYear);
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = DAYS_TH.map(d=>`<div class="cal-day-name">${d}</div>`).join('');
+  const first = new Date(calYear, calMonth, 1).getDay();
+  const days = new Date(calYear, calMonth+1, 0).getDate();
+  const today = new Date();
+  const moTH = calMonth+1, yrTH = buddhistYear(calYear);
+  for(let i=0;i<first;i++) grid.innerHTML+=`<div class="cal-cell other"><div class="cdate"></div></div>`;
+  for(let d=1;d<=days;d++){
+    const isToday = today.getFullYear()===calYear&&today.getMonth()===calMonth&&today.getDate()===d;
+    const evts = activities.filter(a=>{
+      if(!(a.yr===yrTH && a.mo===moTH)) return false;
+      const m = a.date.match(/\d+/g);
+      return m && parseInt(m[0])===d;
+    });
+    let evHTML = evts.slice(0,2).map(e=>`<div class="cal-ev" title="${e.activity}">${e.activity.substring(0,16)}</div>`).join('');
+    if(evts.length>2) evHTML+=`<div class="cal-ev-more">+${evts.length-2} อื่นๆ</div>`;
+    grid.innerHTML+=`<div class="cal-cell${isToday?' today':''}"><div class="cdate">${d}</div>${evHTML}</div>`;
+  }
+}
+
+function changeMonth(dir){
+  calMonth+=dir;
+  if(calMonth>11){calMonth=0;calYear++;}
+  if(calMonth<0){calMonth=11;calYear--;}
+  renderCalendar();
+}
+
+function renderTimeline(){
+  const months = [
+    {mo:6,yr:2569,sem:1},{mo:7,yr:2569,sem:1},{mo:8,yr:2569,sem:1},{mo:9,yr:2569,sem:1},{mo:10,yr:2569,sem:1},
+    {mo:11,yr:2569,sem:2},{mo:12,yr:2569,sem:2},{mo:1,yr:2570,sem:2},{mo:2,yr:2570,sem:2},{mo:3,yr:2570,sem:2}
+  ];
+  let html = `<div class="tl-header">
+    <div class="tl-name-col">กิจกรรม</div>
+    <div class="tl-months">${months.map(m=>`<div class="tl-month sem${m.sem}">${MONTHS_S[m.mo-1]}<br><span style="font-size:9px">${m.yr}</span></div>`).join('')}</div>
+  </div>`;
+  const pct = 100/months.length;
+  const seen = new Set();
+  activities.forEach(a=>{
+    const key = a.activity.substring(0,40);
+    if(seen.has(key)) return; seen.add(key);
+    const idxs = months.map((m,i)=>(a.mo===m.mo&&a.yr===m.yr)?i:-1).filter(i=>i>=0);
+    if(idxs.length===0) return;
+    const minI=Math.min(...idxs), maxI=Math.max(...idxs);
+    const sem = months[minI]?.sem===1?'s1':'s2';
+    html+=`<div class="tl-row">
+      <div class="tl-label" title="${a.activity}">${a.activity.length>30?a.activity.substring(0,30)+'…':a.activity}</div>
+      <div class="tl-track">
+        <div class="tl-bar ${sem}" style="left:${minI*pct}%;width:${(maxI-minI+1)*pct}%"></div>
+      </div>
+    </div>`;
+  });
+  html+=`<div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#6B5AC7"></div> ภาคการศึกษา 1/2569</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div> ภาคการศึกษา 2/2569</div>
+  </div>`;
+  document.getElementById('tl-inner').innerHTML = html;
+}
+
+
+const MONTHS_S2 = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+function adDateToTH(dateStr){
+  if(!dateStr) return '';
+  const [y,m,d] = dateStr.split('-').map(Number);
+  const thY = (y+543).toString().slice(-2);
+  return d+' '+MONTHS_S2[m-1]+' '+thY;
+}
+function buildDateString(){
+  const s = document.getElementById('m-date-start').value;
+  const e = document.getElementById('m-date-end').value;
+  if(!s) return '';
+  if(e && e !== s){
+    const [sy,sm,sd]=s.split('-').map(Number);
+    const [ey,em,ed]=e.split('-').map(Number);
+    const thYs=(sy+543).toString().slice(-2);
+    const thYe=(ey+543).toString().slice(-2);
+    if(sm===em&&sy===ey) return sd+'-'+ed+' '+MONTHS_S2[sm-1]+' '+thYs;
+    return sd+' '+MONTHS_S2[sm-1]+' - '+ed+' '+MONTHS_S2[em-1]+' '+thYe;
+  }
+  return adDateToTH(s);
+}
+function updateDatePreview(){
+  const s = buildDateString();
+  document.getElementById('date-preview').textContent = s ? '📅 '+s : '';
+}
+function parseDateToInputs(dateStr){
+  document.getElementById('m-date-start').value='';
+  document.getElementById('m-date-end').value='';
+  document.getElementById('date-preview').textContent = dateStr ? '📅 '+dateStr : '';
+}
+function openModal(){
+  editId=null;
+  document.getElementById('modal-title').textContent='เพิ่มกิจกรรม';
+  document.getElementById('m-date-start').value='';
+  document.getElementById('m-date-end').value='';
+  document.getElementById('date-preview').textContent='';
+  document.getElementById('m-act').value='';
+  document.getElementById('m-owner').value='';
+  document.getElementById('del-btn').style.display='none';
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function openEditModal(id){
+  const a=activities.find(x=>x.id===id); if(!a) return;
+  editId=id;
+  document.getElementById('modal-title').textContent='แก้ไขกิจกรรม';
+  parseDateToInputs(a.date);
+  document.getElementById('m-act').value=a.activity;
+  document.getElementById('m-owner').value=a.owner||'';
+  document.getElementById('del-btn').style.display='block';
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal(){ document.getElementById('modal-overlay').classList.remove('open'); }
+function closeModalBg(e){ if(e.target===document.getElementById('modal-overlay')) closeModal(); }
+
+function saveAct(){
+  const date=buildDateString();
+  const act=document.getElementById('m-act').value.trim();
+  const owner=document.getElementById('m-owner').value;
+  if(!date||!act){ alert('กรุณาเลือกวันที่และกรอกกิจกรรม'); return; }
+  const mo=guessMonth(date), yr=guessYear(date);
+  if(editId){
+    const idx=activities.findIndex(a=>a.id===editId);
+    activities[idx]={...activities[idx],date,activity:act,owner,mo,yr};
+    showToast('แก้ไขเรียบร้อย ✓');
+  } else {
+    activities.push({id:nextId++,date,activity:act,owner,mo,yr});
+    showToast('เพิ่มกิจกรรมเรียบร้อย ✓');
+  }
+  closeModal(); refresh();
+}
+function deleteAct(){
+  if(!confirm('ลบกิจกรรมนี้?')) return;
+  activities=activities.filter(a=>a.id!==editId);
+  closeModal(); refresh(); showToast('ลบแล้ว');
+}
+
+function exportCSV(){
+  const rows=[['id','วันที่','กิจกรรม','ผู้รับผิดชอบ'],...activities.map(a=>[a.id,a.date,a.activity,a.owner])];
+  const csv='\ufeff'+rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download='กิจกรรมนักศึกษา_2569.csv'; a.click();
+  showToast('ดาวน์โหลด CSV แล้ว ✓');
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// Init
+if(sheetsUrl){
+  document.getElementById('setup-banner').classList.add('hidden');
+  document.getElementById('sheets-url').value=sheetsUrl;
+  loadData();
+} else {
+  showLoading();
+  useSampleData();
+}
+</script>
+</body>
+</html>
